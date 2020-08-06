@@ -33,10 +33,33 @@ var draw = (function() {
         //What shape are we drawing?
         shape='';
 
-        //Are we drawimg a path?
+        //Are we drawing a path?
         isDrawing=false;
 
+        // colors of the shapes.
+        // random color can use this:
+        // ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+        strokeStyle="#000000";
+        fillStyle="#000000";
+
     return {
+        // Set/get the shape colors
+        setStrokeStyle: function(color) {
+            strokeStyle = color;
+        },
+
+        setFillStyle: function(color) {
+            fillStyle = color;
+        },
+
+        getStrokeStyle: function() {
+            return strokeStyle;
+        },
+
+        getFillStyle: function() {
+            return fillStyle;
+        },
+
         //Set the x,y coords based on current event data
         setXY: function(evt) {
 
@@ -58,9 +81,7 @@ var draw = (function() {
       //Draw a rectangle
       drawRect: function(x,y,h,w) {
 
-        //Start by using random fill colors.
-        ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
-      
+        ctx.fillStyle = this.getFillStyle();
         ctx.fillRect (x1,y1,(x2-x1),(y2-y1));
       
       },
@@ -116,8 +137,7 @@ var draw = (function() {
 
         //Draw a line
         drawLine: function() {
-            //Start by using random fill colors.
-            ctx.strokeStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+            ctx.strokeStyle = this.getStrokeStyle();
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -127,8 +147,8 @@ var draw = (function() {
         //Draw a circle
         drawCircle: function() {
 
-            ctx.strokeStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
-            ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+            ctx.strokeStyle = this.getStrokeStyle();
+            ctx.fillStyle = this.getFillStyle();
         
             let a = (x1-x2)
             let b = (y1-y2)
@@ -142,8 +162,7 @@ var draw = (function() {
 
         drawPath: function() {
             //console.log({x1:x,y1:y,x2:x2,y2:y2});
-            //Start by using random fill colors.
-            ctx.strokeStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+            ctx.strokeStyle = this.getStrokeStyle();
             ctx.beginPath();
             ctx.moveTo(lx, ly);
             ctx.lineTo(x, y);
@@ -155,7 +174,10 @@ var draw = (function() {
         canvas.width = mWidth;
         canvas.height = mHeight;
         document.querySelector('main').appendChild(canvas);
-  
+        this.writeXY();
+
+        document.getElementById('strokeStyle').value=this.getStrokeStyle();
+        document.getElementById('fillStyle').value=this.getFillStyle();
       }
     };
   
@@ -205,3 +227,9 @@ document.getElementById('btnCircle').addEventListener('click',function(){
 document.getElementById('btnPath').addEventListener('click', function(){
     draw.setShape('path');
 }, false);
+
+document.getElementById('strokeStyle').addEventListener('change', (e)=>{
+    draw.setStrokeStyle(e.target.value);}, false);
+
+document.getElementById('fillStyle').addEventListener('change', (e)=>{
+    draw.setFillStyle(e.target.value);}, false);

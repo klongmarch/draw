@@ -11,13 +11,21 @@
       <div class="wrapper">
         <nav>
           <ul>
+            <li id="trackX"></li>
+            <li id="trackY"></li>
             <li><button id="btnRect">Rectangle</button></li>
             <li><button id="btnLine">Line</button></li>
             <li><button id="btnCircle">Circle</button></li>
             <li><button id="btnPath">Path</button></li>
-            <li id="trackX"></li>
-            <li id="trackY"></li>
           </ul>
+          <div style="text-align: center">
+            <label for="strokeStyle">Line color:</label>
+            <input type="color" id="strokeStyle" name="fillStyle">
+            &nbsp
+
+            <label for="fillStyle">Fill color:</label>
+            <input type="color" id="fillStyle" name="fillStyle">
+          </div>
         </nav>
         <main></main>
       </div>
